@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Cisco 2901 Router 3D</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FontLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/TextGeometry.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</head>
+
+<body>
+  <div id="loading">
+    <div class="loader"></div>
+    <span>Yuklanmoqda...</span>
+  </div>
+  <div id="tooltip"></div>
+  <script src="./src/data/portData.uz.js"></script>
+  <script src="./src/router/materials.js"></script>
+  <script src="./src/router/chassis.js"></script>
+  <script src="./src/router/EHWIC.js"></script>
+  <script src="./src/router/frontPanel.js"></script>
+  <script src="./src/router/cpu.js"></script>
+  <script src="./src/router/ram.js"></script>
+  <script src="./src/router/fan.js"></script>
+  <script src="./src/router/interior.js"></script>
+  <script src="./src/router/rearPanel.js"></script>
+  <script src="./src/router/power.js"></script>
+  <script src="./src/interaction/tooltip.js"></script>
+  <script src="./src/interaction/raycaster.js"></script>
+  <script src="./src/main.js"></script>
+</body>
+
+</html>
