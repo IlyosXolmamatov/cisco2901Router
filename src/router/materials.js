@@ -1,13 +1,14 @@
 const MATERIALS = {
+  // Silver-aluminium chassis (matches real Cisco 2901 grey body)
   chassis: new THREE.MeshStandardMaterial({
-    color: 0x1a1a1a,
-    metalness: 0.85,
-    roughness: 0.35
+    color: 0xb0aeaa,
+    metalness: 0.72,
+    roughness: 0.38
   }),
   panel: new THREE.MeshStandardMaterial({
-    color: 0x2b2b2b,
-    metalness: 0.7,
-    roughness: 0.45
+    color: 0x8a8884,
+    metalness: 0.65,
+    roughness: 0.42
   }),
   port: new THREE.MeshStandardMaterial({
     color: 0xb8860b,

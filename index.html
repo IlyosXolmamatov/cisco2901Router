@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="uz">
-
 <head>
   <meta charset="UTF-8">
-  <title>Cisco 2901 Router 3D Visualization</title>
+  <title>Cisco 2901 Router — 3D Visualization</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
@@ -12,140 +11,386 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/TextGeometry.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 </head>
-
 <body>
-  <!-- LOADING -->
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  LOADING SCREEN                                         -->
+  <!-- ═══════════════════════════════════════════════════════ -->
   <div id="loading">
     <div class="scan-line"></div>
+    <div class="loading-grid"></div>
     <div class="cisco-logo-anim">
       <div class="logo-dots">
-        <div class="logo-dot"></div>
-        <div class="logo-dot"></div>
-        <div class="logo-dot"></div>
-        <div class="logo-dot"></div>
-        <div class="logo-dot"></div>
-        <div class="logo-dot"></div>
+        <div class="logo-dot"></div><div class="logo-dot"></div>
+        <div class="logo-dot"></div><div class="logo-dot"></div>
+        <div class="logo-dot"></div><div class="logo-dot"></div>
       </div>
       <div class="logo-text-anim">cisco</div>
     </div>
-    <div class="loading-title">Cisco 2901 Router</div>
-    <div class="loading-sub">
-      3D Visualization yuklanmoqda...
-    </div>
-    <div id="load-bar-wrap">
-      <div id="load-bar"></div>
-    </div>
+    <div class="loading-title">Cisco 2901 Series Router</div>
+    <div class="loading-sub">3D Interactive Visualization &nbsp;·&nbsp; WebGL</div>
+    <div id="load-bar-wrap"><div id="load-bar"></div></div>
     <div id="load-percent">0%</div>
-    <div class="loading-tech">
-      Three.js r128 &nbsp;•&nbsp; GSAP 3.x
-      &nbsp;•&nbsp; WebGL
+    <div class="loading-steps">
+      <span class="lstep" id="ls1">● Sahna tayyorlanmoqda</span>
+      <span class="lstep" id="ls2">● Materiallar yuklanmoqda</span>
+      <span class="lstep" id="ls3">● Portlar sozlanmoqda</span>
     </div>
+    <div class="loading-tech">Three.js r128 &nbsp;•&nbsp; GSAP 3.x &nbsp;•&nbsp; WebGL 2.0</div>
   </div>
 
-  <!-- HEADER -->
-  <div id="header-bar">
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  TOP HEADER                                             -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <header id="header-bar">
     <div class="header-left">
-      <div class="logo-dots" style="gap:3px">
-        <div class="logo-dot" style="opacity:1;width:7px;height:7px;background:#0af"></div>
-        <div class="logo-dot" style="opacity:1;width:7px;height:7px;background:#08d"></div>
-        <div class="logo-dot" style="opacity:1;width:7px;height:7px;background:#06b"></div>
-        <div class="logo-dot" style="opacity:1;width:7px;height:7px;background:#06b"></div>
-        <div class="logo-dot" style="opacity:1;width:7px;height:7px;background:#08d"></div>
-        <div class="logo-dot" style="opacity:1;width:7px;height:7px;background:#0af"></div>
+      <div class="cisco-badge">
+        <div class="logo-dots" style="gap:3px">
+          <div class="logo-dot" style="opacity:1;width:6px;height:6px;background:#0af"></div>
+          <div class="logo-dot" style="opacity:1;width:6px;height:6px;background:#08d"></div>
+          <div class="logo-dot" style="opacity:1;width:6px;height:6px;background:#06b"></div>
+          <div class="logo-dot" style="opacity:1;width:6px;height:6px;background:#06b"></div>
+          <div class="logo-dot" style="opacity:1;width:6px;height:6px;background:#08d"></div>
+          <div class="logo-dot" style="opacity:1;width:6px;height:6px;background:#0af"></div>
+        </div>
+        <span class="cisco-wordmark">cisco</span>
       </div>
-      <span style="color:#fff;font-weight:bold;letter-spacing:1px">cisco</span>
-      <span style="color:#1a3a5a">|</span>
-      <span>2901 Series Router</span>
-      <span
-        style="border:1px solid rgba(0,180,255,0.3);padding:2px 8px;border-radius:4px;font-size:10px;color:#4a7a9b">3D
-        Visualization</span>
+      <div class="header-sep"></div>
+      <span class="hdr-model">2901 Series</span>
+      <span class="hdr-badge">3D Visualization</span>
     </div>
+
     <div class="header-center">
-      <div class="blink-dot"></div>
-      <span>CISCO IOS &nbsp; Version 15.4(3)M</span>
+      <!-- VIEW PRESET TABS -->
+      <div class="view-tabs">
+        <button class="vtab active" id="vtab-overview" onclick="camPreset('overview',this)">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+          Umumiy
+        </button>
+        <button class="vtab" id="vtab-front" onclick="camPreset('front',this)">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 4V3M11 4V3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Old panel
+        </button>
+        <button class="vtab" id="vtab-rear" onclick="camPreset('rear',this)">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 8h4M8 8l2-2M8 8l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Orqa panel
+        </button>
+        <button class="vtab" id="vtab-top" onclick="camPreset('top',this)">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 2L14 14H2L8 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          Yuqoridan
+        </button>
+        <button class="vtab" id="vtab-side" onclick="camPreset('side',this)">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          Yon taraf
+        </button>
+      </div>
     </div>
+
     <div class="header-right">
-      <span class="status-pill pill-green">● ONLINE</span>
-      <span class="status-pill pill-green">● IOS READY</span>
-      <span class="status-pill pill-blue">● PoE ACTIVE</span>
+      <div class="status-cluster">
+        <span class="status-pill pill-green"><span class="pill-dot"></span>ONLINE</span>
+        <span class="status-pill pill-green"><span class="pill-dot"></span>IOS 15.4</span>
+        <span class="status-pill pill-blue"><span class="pill-dot"></span>PoE</span>
+      </div>
+      <button class="hdr-icon-btn" onclick="toggleHelp()" title="Yordam">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 6.5C6 5.4 6.9 4.5 8 4.5s2 .9 2 2c0 .9-.6 1.6-1.4 1.9L8 9v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11.5" r=".75" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  LEFT CONTROL PANEL                                     -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <aside id="left-panel">
+
+    <!-- Section: Kamera -->
+    <div class="panel-section">
+      <div class="panel-section-title">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M1 6l4-4 4 4 4-4 2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 13h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Kamera
+      </div>
+      <button class="ctrl-btn" onclick="camPreset('overview', document.getElementById('vtab-overview'))">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        Umumiy ko'rinish
+      </button>
+      <button class="ctrl-btn" onclick="camPreset('front', document.getElementById('vtab-front'))">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="5" width="12" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M5 5V4M11 5V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Old panel
+      </button>
+      <button class="ctrl-btn" onclick="camPreset('rear', document.getElementById('vtab-rear'))">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="5" width="12" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M6 8h4M8 8V6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Orqa panel
+      </button>
+      <button class="ctrl-btn" onclick="resetCam()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 1 1 1.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12V8h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Kamera reset
+      </button>
+    </div>
+
+    <!-- Section: Router -->
+    <div class="panel-section">
+      <div class="panel-section-title">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><circle cx="4" cy="8" r="1" fill="currentColor"/><circle cx="7" cy="8" r="1" fill="currentColor"/></svg>
+        Router
+      </div>
+      <button class="ctrl-btn" id="lid-btn" onclick="toggleLid()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="8" width="12" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M2 8L8 3L14 8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span id="lid-btn-txt">Qopqoqni och</span>
+      </button>
+      <button class="ctrl-btn" id="power-btn" onclick="togglePower()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v5M5 4.27A5 5 0 1 0 11 4.27" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span id="power-btn-txt">Quvvat: ON</span>
+      </button>
+    </div>
+
+    <!-- Section: Ko'rinish -->
+    <div class="panel-section">
+      <div class="panel-section-title">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5Z" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.5"/></svg>
+        Ko'rinish
+      </div>
+      <button class="ctrl-btn toggle-btn" id="wire-btn" onclick="toggleWireframe()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/></svg>
+        <span>Wireframe</span>
+        <span class="toggle-state" id="wire-state">OFF</span>
+      </button>
+      <button class="ctrl-btn toggle-btn" id="grid-btn" onclick="toggleGrid()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M1 5.5h14M1 10.5h14M5.5 1v14M10.5 1v14" stroke="currentColor" stroke-width="1.2"/></svg>
+        <span>Grid</span>
+        <span class="toggle-state toggle-on" id="grid-state">ON</span>
+      </button>
+      <button class="ctrl-btn toggle-btn" id="auto-rot-btn" onclick="toggleAutoRotate()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13 8A5 5 0 0 1 3.5 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3 8A5 5 0 0 1 12.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M15 8l-2 2-2-2M1 8l2-2 2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Auto aylan</span>
+        <span class="toggle-state" id="autorot-state">OFF</span>
+      </button>
+    </div>
+
+    <!-- Section: Portlar -->
+    <div class="panel-section">
+      <div class="panel-section-title">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><line x1="4" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="4" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="4" y1="12" x2="14" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="1.5" cy="4" r="1.2" fill="currentColor"/><circle cx="1.5" cy="8" r="1.2" fill="currentColor"/><circle cx="1.5" cy="12" r="1.2" fill="currentColor"/></svg>
+        Portlar
+      </div>
+      <button class="ctrl-btn accent-btn" onclick="openPortModal()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+        Barcha portlar
+      </button>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  RIGHT INFO PANEL                                       -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <aside id="right-panel">
+
+    <!-- TABS -->
+    <div class="r-tabs">
+      <button class="rtab active" data-tab="info" onclick="switchRTab('info',this)">Ma'lumot</button>
+      <button class="rtab" data-tab="ports" onclick="switchRTab('ports',this)">Portlar</button>
+      <button class="rtab" data-tab="stats" onclick="switchRTab('stats',this)">Stats</button>
+    </div>
+
+    <!-- TAB: MA'LUMOT -->
+    <div class="r-tab-body" id="rtab-info">
+      <div class="device-card">
+        <div class="device-card-head">
+          <div class="logo-dots" style="gap:2px;margin-right:6px">
+            <div class="logo-dot" style="opacity:1;width:5px;height:5px;background:#0af"></div>
+            <div class="logo-dot" style="opacity:1;width:5px;height:5px;background:#08d"></div>
+            <div class="logo-dot" style="opacity:1;width:5px;height:5px;background:#06b"></div>
+            <div class="logo-dot" style="opacity:1;width:5px;height:5px;background:#06b"></div>
+            <div class="logo-dot" style="opacity:1;width:5px;height:5px;background:#08d"></div>
+            <div class="logo-dot" style="opacity:1;width:5px;height:5px;background:#0af"></div>
+          </div>
+          <div>
+            <div style="color:#fff;font-size:13px;font-weight:bold">Cisco 2901</div>
+            <div style="color:#4a7a9b;font-size:10px">Integrated Services Router</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-group">
+        <div class="info-row"><span class="lbl">IOS Versiya</span><span class="val accent-val">15.4(3)M</span></div>
+        <div class="info-row"><span class="lbl">RAM</span><span class="val">512 MB</span></div>
+        <div class="info-row"><span class="lbl">Flash xotira</span><span class="val">256 MB</span></div>
+        <div class="info-row"><span class="lbl">EHWIC slotlar</span><span class="val">4 ta</span></div>
+        <div class="info-row"><span class="lbl">PVDM slotlar</span><span class="val">2 ta</span></div>
+        <div class="info-row"><span class="lbl">GE portlar</span><span class="val">2 ta</span></div>
+        <div class="info-row"><span class="lbl">USB portlar</span><span class="val">2 ta</span></div>
+        <div class="info-row"><span class="lbl">Quvvat</span><span class="val">100–240 V~</span></div>
+        <div class="info-row"><span class="lbl">Protokollar</span><span class="val">IPv4 / IPv6</span></div>
+        <div class="info-row"><span class="lbl">O'lcham</span><span class="val">1U Rack</span></div>
+      </div>
+      <div class="spec-bar-wrap">
+        <div class="spec-bar-label"><span>CPU ishlatilishi</span><span id="cpu-pct">34%</span></div>
+        <div class="spec-bar"><div class="spec-bar-fill cpu-fill" id="cpu-bar" style="width:34%"></div></div>
+      </div>
+      <div class="spec-bar-wrap">
+        <div class="spec-bar-label"><span>RAM ishlatilishi</span><span id="ram-pct">61%</span></div>
+        <div class="spec-bar"><div class="spec-bar-fill ram-fill" id="ram-bar" style="width:61%"></div></div>
+      </div>
+    </div>
+
+    <!-- TAB: PORTLAR -->
+    <div class="r-tab-body hidden" id="rtab-ports">
+      <div class="panel-section-title" style="margin-bottom:8px">
+        Port Holati
+        <span class="port-count-badge" id="active-port-count">12 faol</span>
+      </div>
+      <div class="port-grid" id="port-dots"></div>
+      <div class="port-legend">
+        <span><span class="legend-dot" style="background:#00ff88"></span>Faol</span>
+        <span><span class="legend-dot" style="background:#ffaa00"></span>Band</span>
+        <span><span class="legend-dot" style="background:#444"></span>Bo'sh</span>
+      </div>
+    </div>
+
+    <!-- TAB: STATS -->
+    <div class="r-tab-body hidden" id="rtab-stats">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(0,255,136,0.12);color:#00ff88">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 12l4-4 3 3 4-6 3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div><div class="stat-val" id="uptime-val">04:23:11</div><div class="stat-lbl">Uptime</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(0,180,255,0.12);color:#00b4ff">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 10L6 6l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div><div class="stat-val" id="pkt-val">1.24M</div><div class="stat-lbl">Paketlar/s</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(255,170,0,0.12);color:#ffaa00">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3.5l2.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div><div class="stat-val" id="temp-val">47°C</div><div class="stat-lbl">Harorat</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(100,100,255,0.12);color:#8888ff">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="5" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M5 5V4a3 3 0 0 1 6 0v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div><div class="stat-val" id="err-val">0</div><div class="stat-lbl">Xatolar</div></div>
+      </div>
+
+      <div class="mini-chart-label">Tarmoq yuklanishi (so'nggi 20s)</div>
+      <canvas id="mini-chart" width="178" height="60"></canvas>
+
+      <div class="interface-list">
+        <div class="iface-row">
+          <span class="iface-dot" style="background:#00ff88"></span>
+          <span class="iface-name">GE 0/0</span>
+          <span class="iface-speed">↑ 45 Mbps</span>
+          <span class="iface-speed">↓ 12 Mbps</span>
+        </div>
+        <div class="iface-row">
+          <span class="iface-dot" style="background:#00ff88"></span>
+          <span class="iface-name">GE 0/1</span>
+          <span class="iface-speed">↑ 8 Mbps</span>
+          <span class="iface-speed">↓ 2 Mbps</span>
+        </div>
+        <div class="iface-row">
+          <span class="iface-dot" style="background:#ffaa00"></span>
+          <span class="iface-name">EHWIC-1</span>
+          <span class="iface-speed">↑ 22 Mbps</span>
+          <span class="iface-speed">↓ 5 Mbps</span>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  BOTTOM STATUS BAR                                      -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div id="bottom-bar">
+    <div class="bot-left">
+      <span class="bot-item" id="cam-view-lbl">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>
+        Umumiy ko'rinish
+      </span>
+      <span class="bot-sep">|</span>
+      <span class="bot-item" id="zoom-lbl">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M12 12l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M5 7h4M7 5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Zoom: 100%
+      </span>
+      <span class="bot-sep">|</span>
+      <span class="bot-item">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M8 1v2M8 13v2M1 8h2M13 8h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span id="fps-lbl">60 FPS</span>
+      </span>
+    </div>
+    <div class="bot-center">
+      <span class="bot-hint">Sichqonchani aylantirib 3D ko'ring &nbsp;·&nbsp; Port ustiga bosing — ma'lumot</span>
+    </div>
+    <div class="bot-right">
+      <span class="bot-item blink-dot-sm"></span>
+      <span class="bot-item" style="color:#00ff88">WebGL ACTIVE</span>
+      <span class="bot-sep">|</span>
+      <span class="bot-item">Three.js r128</span>
     </div>
   </div>
 
-  <!-- LEFT PANEL -->
-  <div id="left-panel">
-    <div class="panel-title">Boshqaruv</div>
-    <button class="ctrl-btn" onclick="openLid()">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <rect x="2" y="8" width="12" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
-        <path d="M2 8L8 3L14 8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-      </svg>
-      Qopqoqni och
-    </button>
-    <button class="ctrl-btn" onclick="closeLid()">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <rect x="2" y="2" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.5" />
-        <path d="M2 8L8 13L14 8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-      </svg>
-      Qopqoqni yop
-    </button>
-    <div class="btn-divider"></div>
-    <button class="ctrl-btn power-on" id="power-btn" onclick="togglePower()">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M8 2v5M5 4.27A5 5 0 1 0 11 4.27" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-      </svg>
-      Quvvat: ON
-    </button>
-    <div class="btn-divider"></div>
-    <button class="ctrl-btn" onclick="resetCam()">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M2 8a6 6 0 1 1 1.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-        <path d="M2 12V8h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-      Kamera reset
-    </button>
-    <button class="ctrl-btn" onclick="openPortModal()">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <line x1="5" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-        <line x1="5" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-        <line x1="5" y1="12" x2="14" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-        <circle cx="2" cy="4" r="1" fill="currentColor" />
-        <circle cx="2" cy="8" r="1" fill="currentColor" />
-        <circle cx="2" cy="12" r="1" fill="currentColor" />
-      </svg>
-      Barcha portlar
-    </button>
-  </div>
-
-  <!-- RIGHT PANEL -->
-  <div id="right-panel">
-    <div class="panel-title">Qurilma ma'lumoti</div>
-    <div class="info-row"><span class="lbl">Model</span><span class="val">Cisco 2901</span></div>
-    <div class="info-row"><span class="lbl">IOS</span><span class="val">15.4(3)M</span></div>
-    <div class="info-row"><span class="lbl">RAM</span><span class="val">512 MB</span></div>
-    <div class="info-row"><span class="lbl">Flash</span><span class="val">256 MB</span></div>
-    <div class="info-row"><span class="lbl">Portlar</span><span class="val">19 ta</span></div>
-    <div class="info-row"><span class="lbl">Protokol</span><span class="val">IPv4/IPv6</span></div>
-    <div class="info-row"><span class="lbl">Quvvat</span><span class="val">100-240V~</span></div>
-    <div class="panel-title" style="margin-top:12px">Port holati</div>
-    <div class="port-grid" id="port-dots"></div>
-  </div>
-
-  <!-- NOTIFICATION -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  NOTIFICATION TOAST                                     -->
+  <!-- ═══════════════════════════════════════════════════════ -->
   <div id="notification"></div>
 
-  <!-- PORT LIST MODAL -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  HELP OVERLAY                                           -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div id="help-overlay" onclick="toggleHelp()">
+    <div id="help-box" onclick="event.stopPropagation()">
+      <div class="help-head">
+        <span>Klaviatura & Boshqaruv</span>
+        <button class="modal-close-btn" onclick="toggleHelp()">×</button>
+      </div>
+      <div class="help-body">
+        <div class="help-section">Kamera boshqaruvi</div>
+        <div class="help-row"><kbd>Chap tugma + Sürük</kbd><span>Aylanib ko'rish</span></div>
+        <div class="help-row"><kbd>O'ng tugma + Sürük</kbd><span>Siljitish</span></div>
+        <div class="help-row"><kbd>Scroll</kbd><span>Zoom in/out</span></div>
+        <div class="help-row"><kbd>R</kbd><span>Kamera reset</span></div>
+        <div class="help-section">Router boshqaruvi</div>
+        <div class="help-row"><kbd>L</kbd><span>Qopqoqni och/yop</span></div>
+        <div class="help-row"><kbd>P</kbd><span>Quvvat on/off</span></div>
+        <div class="help-row"><kbd>W</kbd><span>Wireframe on/off</span></div>
+        <div class="help-row"><kbd>G</kbd><span>Grid on/off</span></div>
+        <div class="help-section">Ko'rinish presetlar</div>
+        <div class="help-row"><kbd>1</kbd><span>Umumiy ko'rinish</span></div>
+        <div class="help-row"><kbd>2</kbd><span>Old panel</span></div>
+        <div class="help-row"><kbd>3</kbd><span>Orqa panel</span></div>
+        <div class="help-row"><kbd>4</kbd><span>Yuqoridan</span></div>
+        <div class="help-row"><kbd>?</kbd><span>Shu yordam oynasi</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  PORT LIST MODAL                                        -->
+  <!-- ═══════════════════════════════════════════════════════ -->
   <div id="port-modal-overlay" onclick="closePortModal()">
     <div id="port-modal" onclick="event.stopPropagation()">
       <div id="port-modal-header">
-        <span>BARCHA PORTLAR (19)</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="#00b4ff" stroke-width="1.5"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="#00b4ff" stroke-width="1.5"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="#00b4ff" stroke-width="1.5"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="#00b4ff" stroke-width="1.5"/></svg>
+          <span>BARCHA PORTLAR</span>
+        </div>
         <button class="modal-close-btn" onclick="closePortModal()">×</button>
+      </div>
+      <div class="modal-search-wrap">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#4a7a9b" stroke-width="1.5"/><path d="M12 12l3 3" stroke="#4a7a9b" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <input id="port-search" type="text" placeholder="Port qidirish..." oninput="filterPorts(this.value)">
       </div>
       <div id="port-modal-body"></div>
     </div>
   </div>
 
-  <!-- 3D CANVAS + TOOLTIP -->
+  <!-- TOOLTIP -->
   <div id="tooltip"></div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  SCRIPTS                                                -->
+  <!-- ═══════════════════════════════════════════════════════ -->
   <script src="./src/data/portData.uz.js"></script>
   <script src="./src/router/materials.js"></script>
   <script src="./src/router/chassis.js"></script>
@@ -161,5 +406,4 @@
   <script src="./src/interaction/raycaster.js"></script>
   <script src="./src/main.js"></script>
 </body>
-
 </html>
