@@ -3,14 +3,14 @@ function createRearPanel() {
 
   // Rear face is at z = -1.84  (chassis depth 3.68 / 2)
   const RZ = -1.845;  // safely outside chassis rear face
-  const D  = 0.005; // layer step
+  const D = 0.005; // layer step
 
   // ─────────────────────────────────────────────────────────
   // Helper: make a canvas-label plane
   function labelPlane(text, w, h, fontSize, color, bgAlpha) {
     const S = 3;
     const c = document.createElement('canvas');
-    c.width  = Math.round(w * 600 * S);
+    c.width = Math.round(w * 600 * S);
     c.height = Math.round(h * 600 * S);
     const ctx = c.getContext('2d');
     if (bgAlpha) {
@@ -109,8 +109,8 @@ function createRearPanel() {
   const ehwicSlots = [
     { name: 'EHWIC3', x: -1.740, w: 0.880 },
     { name: 'EHWIC2', x: -0.830, w: 0.880 },
-    { name: 'EHWIC1', x:  0.100, w: 0.940 },
-    { name: 'EHWIC0', x:  0.845, w: 0.450 },
+    { name: 'EHWIC1', x: 0.100, w: 0.940 },
+    { name: 'EHWIC0', x: 0.845, w: 0.450 },
   ];
 
   const slotMat = new THREE.MeshStandardMaterial({
@@ -215,9 +215,9 @@ function createRearPanel() {
   wc.fillRect(0, 0, 256, 120);
   wc.fillStyle = '#111111';
   wc.font = 'bold 11px Arial'; wc.textAlign = 'center';
-  wc.fillText('CISCO PRODUCT',  128, 20);
-  wc.fillText('USER CLASS 1',   128, 38);
-  wc.fillText('LASER PRODUCT',  128, 56);
+  wc.fillText('CISCO PRODUCT', 128, 20);
+  wc.fillText('USER CLASS 1', 128, 38);
+  wc.fillText('LASER PRODUCT', 128, 56);
   wc.font = '9px Arial';
   wc.fillText('IEC 60825-1', 128, 76);
   const warnPlane = new THREE.Mesh(
@@ -246,11 +246,11 @@ function createRearPanel() {
 
   // SM / EN / LINK / TX / RX LEDs row
   const ledRow = [
-    { name: 'SM_LED',   col: 0x00ff44, lbl: 'SM'   },
-    { name: 'EN_LED',   col: 0x00ff44, lbl: 'EN'   },
+    { name: 'SM_LED', col: 0x00ff44, lbl: 'SM' },
+    { name: 'EN_LED', col: 0x00ff44, lbl: 'EN' },
     { name: 'LINK_LED', col: 0xffaa00, lbl: 'LINK' },
-    { name: 'TX_LED',   col: 0xffaa00, lbl: 'TX'   },
-    { name: 'RX_LED',   col: 0x00ff44, lbl: 'RX'   },
+    { name: 'TX_LED', col: 0xffaa00, lbl: 'TX' },
+    { name: 'RX_LED', col: 0x00ff44, lbl: 'RX' },
   ];
   ledRow.forEach((item, i) => {
     const lx = -0.375 + i * 0.062;
@@ -316,12 +316,12 @@ function createRearPanel() {
 
   // ── 8. GE 0/0 and GE 0/1 (stacked RJ45, right side) ─────────
   const geZ = RZ + D * 4;
-  const ge00 = rj45('GE_0_0', 1.285,  0.008, geZ);
+  const ge00 = rj45('GE_0_0', 1.285, 0.008, geZ);
   group.add(ge00);
   const ge01 = rj45('GE_0_1', 1.285, -0.082, geZ);
   group.add(ge01);
   const geLbl = labelPlane('GE 0/0', 0.085, 0.020, 6, '#00ccff');
-  geLbl.position.set(1.285,  0.050, geZ + D * 6);
+  geLbl.position.set(1.285, 0.050, geZ + D * 6);
   group.add(geLbl);
   const geLbl2 = labelPlane('GE 0/1', 0.085, 0.020, 6, '#00ccff');
   geLbl2.position.set(1.285, -0.040, geZ + D * 6);
@@ -370,11 +370,11 @@ function createRearPanel() {
   // ── 11. BOTTOM ROW: CF-1, CF-0, SM, PVDM1, PVDM0 ───────────
   const botZ = RZ + D * 4;
   const botSlots = [
-    { name: 'CF_1',  x: -2.010, w: 0.155, h: 0.055, col: 0x555555, lbl: 'CF-1'  },
-    { name: 'CF_0',  x: -1.530, w: 0.155, h: 0.055, col: 0x555555, lbl: 'CF-0'  },
-    { name: 'SM',    x: -0.440, w: 0.155, h: 0.055, col: 0x444455, lbl: 'SM'    },
-    { name: 'PVDM1', x:  0.180, w: 0.115, h: 0.055, col: 0x334455, lbl: 'PVDM1' },
-    { name: 'PVDM0', x:  0.540, w: 0.115, h: 0.055, col: 0x334455, lbl: 'PVDM0' },
+    { name: 'CF_1', x: -2.010, w: 0.155, h: 0.055, col: 0x555555, lbl: 'CF-1' },
+    { name: 'CF_0', x: -1.530, w: 0.155, h: 0.055, col: 0x555555, lbl: 'CF-0' },
+    { name: 'SM', x: -0.440, w: 0.155, h: 0.055, col: 0x444455, lbl: 'SM' },
+    { name: 'PVDM1', x: 0.180, w: 0.115, h: 0.055, col: 0x334455, lbl: 'PVDM1' },
+    { name: 'PVDM0', x: 0.540, w: 0.115, h: 0.055, col: 0x334455, lbl: 'PVDM0' },
   ];
   botSlots.forEach(s => {
     const sl = new THREE.Mesh(

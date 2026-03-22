@@ -122,7 +122,7 @@ window.addEventListener('resize', () => {
 (function startLoading() {
   const bar = document.getElementById('load-bar');
   const pct = document.getElementById('load-percent');
-  const el  = document.getElementById('loading');
+  const el = document.getElementById('loading');
   const steps = ['ls1', 'ls2', 'ls3'];
   let p = 0, step = 0;
   const iv = setInterval(() => {
@@ -158,9 +158,9 @@ window.addEventListener('resize', () => {
     const d = document.createElement('div');
     d.className = 'port-dot';
     const st = portData[key].status || '';
-    if (st.includes('🟢'))      { d.classList.add('dot-green'); active++; }
+    if (st.includes('🟢')) { d.classList.add('dot-green'); active++; }
     else if (st.includes('🟡')) { d.classList.add('dot-amber'); active++; }
-    else                        { d.classList.add('dot-gray'); }
+    else { d.classList.add('dot-gray'); }
     d.title = portData[key].nomi;
     d.onclick = () => showTooltip(key);
     dotEl.appendChild(d);
@@ -191,11 +191,11 @@ function filterPorts(q) { _buildPortModal(q.toLowerCase()); }
 
 function _buildPortModal(q) {
   const groups = {
-    'Gigabit Ethernet':  ['GE_0_0', 'GE_0_1'],
-    'EHWIC Modullar':    ['EHWIC_2_FE_0','EHWIC_2_FE_1','EHWIC_2_FE_2','EHWIC_2_FE_3','EHWIC_2_SFP_0','EHWIC_3_SERIAL'],
-    'Boshqaruv':         ['CONSOLE', 'AUX', 'USB'],
-    'Saqlash':           ['CF_0', 'CF_1', 'PVDM_0', 'PVDM_1', 'SM'],
-    'Quvvat va LED':     ['POWER_SWITCH', 'IEC_POWER', 'SYS_LED', 'ACT_LED', 'POE_LED']
+    'Gigabit Ethernet': ['GE_0_0', 'GE_0_1'],
+    'EHWIC Modullar': ['EHWIC_2_FE_0', 'EHWIC_2_FE_1', 'EHWIC_2_FE_2', 'EHWIC_2_FE_3', 'EHWIC_2_SFP_0', 'EHWIC_3_SERIAL'],
+    'Boshqaruv': ['CONSOLE', 'AUX', 'USB'],
+    'Saqlash': ['CF_0', 'CF_1', 'PVDM_0', 'PVDM_1', 'SM'],
+    'Quvvat va LED': ['POWER_SWITCH', 'IEC_POWER', 'SYS_LED', 'ACT_LED', 'POE_LED']
   };
   const body = document.getElementById('port-modal-body');
   body.innerHTML = '';
@@ -249,18 +249,20 @@ function showNotif(msg) {
 
 // ── CAMERA PRESETS ───────────────────────────────────────────
 const CAM_PRESETS = {
-  overview: { pos: [0,  0.15,  5.5], target: [0, 0,  0], label: 'Umumiy ko\'rinish' },
-  front:    { pos: [0,  0.05,  3.8], target: [0, 0,  0.5], label: 'Old panel'  },
-  rear:     { pos: [0,  0.05, -3.8], target: [0, 0, -0.5], label: 'Orqa panel' },
-  top:      { pos: [0,  4.0,   0.1], target: [0, 0,  0], label: 'Yuqoridan'  },
-  side:     { pos: [4.5, 0.2,   0.5], target: [0, 0,  0], label: 'Yon taraf'  },
+  overview: { pos: [0, 0.15, 5.5], target: [0, 0, 0], label: 'Umumiy ko\'rinish' },
+  front: { pos: [0, 0.05, 3.8], target: [0, 0, 0.5], label: 'Old panel' },
+  rear: { pos: [0, 0.05, -3.8], target: [0, 0, -0.5], label: 'Orqa panel' },
+  top: { pos: [0, 4.0, 0.1], target: [0, 0, 0], label: 'Yuqoridan' },
+  side: { pos: [4.5, 0.2, 0.5], target: [0, 0, 0], label: 'Yon taraf' },
 };
 
 function camPreset(name, btn) {
   const p = CAM_PRESETS[name]; if (!p) return;
   gsap.to(camera.position, { x: p.pos[0], y: p.pos[1], z: p.pos[2], duration: 0.9, ease: 'power2.inOut' });
-  gsap.to(controls.target, { x: p.target[0], y: p.target[1], z: p.target[2], duration: 0.9, ease: 'power2.inOut',
-    onUpdate: () => controls.update() });
+  gsap.to(controls.target, {
+    x: p.target[0], y: p.target[1], z: p.target[2], duration: 0.9, ease: 'power2.inOut',
+    onUpdate: () => controls.update()
+  });
   // Update active tab
   document.querySelectorAll('.vtab').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
@@ -289,8 +291,8 @@ function toggleLid() {
   showNotif(_lidOpen ? '🔓 Qopqoq ochildi' : '🔒 Qopqoq yopildi');
 }
 // legacy aliases
-window.openLid  = () => { if (!_lidOpen) toggleLid(); };
-window.closeLid = () => { if (_lidOpen)  toggleLid(); };
+window.openLid = () => { if (!_lidOpen) toggleLid(); };
+window.closeLid = () => { if (_lidOpen) toggleLid(); };
 
 // ── POWER TOGGLE ─────────────────────────────────────────────
 let _powerOn = true;
@@ -415,10 +417,10 @@ function toggleHelp() {
     const ramBar = document.getElementById('ram-bar');
     const cpuPct = document.getElementById('cpu-pct');
     const ramPct = document.getElementById('ram-pct');
-    if (cpuBar)  cpuBar.style.width  = cpu + '%';
-    if (cpuPct)  cpuPct.textContent  = cpu + '%';
-    if (ramBar)  ramBar.style.width  = ram + '%';
-    if (ramPct)  ramPct.textContent  = ram + '%';
+    if (cpuBar) cpuBar.style.width = cpu + '%';
+    if (cpuPct) cpuPct.textContent = cpu + '%';
+    if (ramBar) ramBar.style.width = ram + '%';
+    if (ramPct) ramPct.textContent = ram + '%';
   }, 2500);
 
   // Packet counter
@@ -473,17 +475,17 @@ function toggleHelp() {
 // ── KEYBOARD SHORTCUTS ───────────────────────────────────────
 document.addEventListener('keydown', e => {
   if (e.target.tagName === 'INPUT') return;
-  switch(e.key) {
+  switch (e.key) {
     case 'r': case 'R': resetCam(); break;
     case 'l': case 'L': toggleLid(); break;
     case 'p': case 'P': togglePower(); break;
     case 'w': case 'W': toggleWireframe(); break;
     case 'g': case 'G': toggleGrid(); break;
     case '1': camPreset('overview', document.getElementById('vtab-overview')); break;
-    case '2': camPreset('front',    document.getElementById('vtab-front'));    break;
-    case '3': camPreset('rear',     document.getElementById('vtab-rear'));     break;
-    case '4': camPreset('top',      document.getElementById('vtab-top'));      break;
-    case '5': camPreset('side',     document.getElementById('vtab-side'));     break;
+    case '2': camPreset('front', document.getElementById('vtab-front')); break;
+    case '3': camPreset('rear', document.getElementById('vtab-rear')); break;
+    case '4': camPreset('top', document.getElementById('vtab-top')); break;
+    case '5': camPreset('side', document.getElementById('vtab-side')); break;
     case '?': toggleHelp(); break;
     case 'Escape':
       closePortModal();

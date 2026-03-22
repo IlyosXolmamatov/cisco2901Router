@@ -3,8 +3,8 @@ function createFrontPanel() {
 
   // Chassis front face is at z = 3.68/2 = 1.84
   // We layer elements slightly in front with thin depth offsets
-  const FZ   = 1.845;  // front face Z — safely outside chassis (1.84 + gap)
-  const D    = 0.005;  // base step depth for layering
+  const FZ = 1.845;  // front face Z — safely outside chassis (1.84 + gap)
+  const D = 0.005;  // base step depth for layering
 
   // ── 1. Full Front Face Plate ─────────────────────────────────
   // Dark navy base — covers entire chassis front face
@@ -34,7 +34,7 @@ function createFrontPanel() {
   // ── 3. Diamond Grille Texture ────────────────────────────────
   // Build diamond/hexagonal mesh pattern on a canvas
   const gCanvas = document.createElement('canvas');
-  gCanvas.width  = 1024;
+  gCanvas.width = 1024;
   gCanvas.height = 256;
   const gCtx = gCanvas.getContext('2d');
   gCtx.fillStyle = '#0e1e2e';
@@ -49,9 +49,9 @@ function createFrontPanel() {
       const cy = row * dH;
       gCtx.beginPath();
       gCtx.moveTo(cx + dW / 2, cy);
-      gCtx.lineTo(cx + dW,     cy + dH / 2);
+      gCtx.lineTo(cx + dW, cy + dH / 2);
       gCtx.lineTo(cx + dW / 2, cy + dH);
-      gCtx.lineTo(cx,          cy + dH / 2);
+      gCtx.lineTo(cx, cy + dH / 2);
       gCtx.closePath();
       gCtx.stroke();
     }
@@ -78,11 +78,11 @@ function createFrontPanel() {
     metalness: 0.3,
     roughness: 0.45
   });
-  const barHeights  = [0.034, 0.050, 0.065, 0.065, 0.050, 0.034];
-  const barW        = 0.022;
-  const barSpacing  = 0.013;
-  const logoStartX  = -1.945;
-  const logoBaseY   = 0.115;
+  const barHeights = [0.034, 0.050, 0.065, 0.065, 0.050, 0.034];
+  const barW = 0.022;
+  const barSpacing = 0.013;
+  const logoStartX = -1.945;
+  const logoBaseY = 0.115;
   barHeights.forEach((h, i) => {
     const bar = new THREE.Mesh(
       new THREE.BoxGeometry(barW, h, D * 3),
@@ -241,7 +241,7 @@ function createFrontPanel() {
     new THREE.BoxGeometry(0.036, 0.022, D * 4),
     sysMat
   );
-  sysLed.position.set(-2.01,  -0.163, FZ + D * 3);
+  sysLed.position.set(-2.01, -0.163, FZ + D * 3);
   sysLed.name = "SYS_LED";
   group.add(sysLed);
 
@@ -275,7 +275,7 @@ function createFrontPanel() {
   lc.fillStyle = '#778899';
   lc.font = 'bold 11px Arial';
   lc.textAlign = 'center';
-  lc.fillText('SYS', 35,  18);
+  lc.fillText('SYS', 35, 18);
   lc.fillText('ACT', 105, 18);
   lc.fillText('POE', 175, 18);
   const ledLabel = new THREE.Mesh(
